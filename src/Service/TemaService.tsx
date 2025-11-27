@@ -1,29 +1,28 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/tema";
+const URL_BASE = "http://localhost:8080/tema";
 
-export class TemaService {
+class TemaService {
 
-    getAll() {
-        return axios.get(API_URL);
+    findAll() {
+        return axios.get(URL_BASE);
     }
 
-    getById(id: number) {
-        return axios.get(`${API_URL}/${id}`);
+    findById(id: number) {
+        return axios.get(`${URL_BASE}/${id}`);
     }
 
-    create(tema: any) {
-        return axios.post(API_URL, tema);
+    create(tema: object) {
+        return axios.post(URL_BASE, tema);
     }
 
-    update(id: number, tema: any) {
-        return axios.put(`${API_URL}/${id}`, tema);
+    update(id: number, tema: object) {
+        return axios.put(`${URL_BASE}/${id}`, tema);
     }
 
     delete(id: number) {
-        return axios.delete(`${API_URL}/${id}`);
+        return axios.delete(`${URL_BASE}/${id}`);
     }
 }
 
 export default new TemaService();
-

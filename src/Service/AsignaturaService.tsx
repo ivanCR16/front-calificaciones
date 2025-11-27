@@ -1,27 +1,27 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/asignatura";
+const URL_BASE = "http://localhost:8080/asignatura";
 
-export class AsignaturaService {
+class AsignaturaService {
 
-    getAll() {
-        return axios.get(API_URL);
+    findAll() {
+        return axios.get(URL_BASE);
     }
 
-    getById(id: number) {
-        return axios.get(`${API_URL}/${id}`);
+    findById(id: number) {
+        return axios.get(`${URL_BASE}/${id}`);
     }
 
-    create(asignatura: any) {
-        return axios.post(API_URL, asignatura);
+    create(asignatura: object) {
+        return axios.post(URL_BASE, asignatura);
     }
 
-    update(id: number, asignatura: any) {
-        return axios.put(`${API_URL}/${id}`, asignatura);
+    update(id: number, asignatura: object) {
+        return axios.put(`${URL_BASE}/${id}`, asignatura);
     }
 
     delete(id: number) {
-        return axios.delete(`${API_URL}/${id}`);
+        return axios.delete(`${URL_BASE}/${id}`);
     }
 }
 
