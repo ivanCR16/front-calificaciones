@@ -1,4 +1,4 @@
-import React from 'react';
+
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { Menubar } from 'primereact/menubar';
@@ -7,6 +7,9 @@ import { InputText } from 'primereact/inputtext';
 import { Avatar } from 'primereact/avatar';
 import CRUDGrupoComponent from './components/grupo/CRUDGrupoComponent';
 import CRUDAlumnoComponent from './components/alumno/CRUDAlumnoComponent';
+import CRUDAsignaturaComponent from "./components/asignatura/CRUDAsignaturaComponent.tsx";
+import CRUDTemaComponent from "./components/tema/CRUDTemaComponent.tsx";
+
 
 const AppLayout = () => {
     const navigate = useNavigate();
@@ -23,6 +26,16 @@ const AppLayout = () => {
                     label: 'Alumno',
                     icon: 'pi pi-fw pi-users',
                     command: () => navigate('/alumno')
+                },
+                {
+                    label: 'Asignatura',
+                    icon: 'pi pi-fw pi-users',
+                    command: () => navigate('/asignatura')
+                },
+                {
+                    label: 'Tema',
+                    icon: 'pi pi-fw pi-users',
+                    command: () => navigate('/tema')
                 }
             ]
         }
@@ -56,6 +69,8 @@ const AppLayout = () => {
                     <Routes>
                         <Route path="/grupos" element={<CRUDGrupoComponent />} />
                         <Route path="/alumno" element={<CRUDAlumnoComponent />} />
+                        <Route path="/asignatura" element={<CRUDAsignaturaComponent />} />
+                        <Route path="/tema" element={<CRUDTemaComponent />} />
                         <Route path="/" element={<h2>Bienvenido al Dashboard</h2>} />
                     </Routes>
                 </main>

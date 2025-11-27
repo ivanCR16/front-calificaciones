@@ -1,26 +1,27 @@
-import axios, { type AxiosResponse } from "axios";
-import type { Asignatura } from "../interface/AsignaturaInterface";
-const URL_BASE = "http://localhost:8080/asignatura";
+import axios from "axios";
 
-class AsignaturaService {
-    findAll(): Promise<AxiosResponse<Asignatura[]>> {
-        return axios.get(URL_BASE);
+const API_URL = "http://localhost:8080/api/asignatura";
+
+export class AsignaturaService {
+
+    getAll() {
+        return axios.get(API_URL);
     }
 
-    findById(idAsignatura: number): Promise<AxiosResponse<Asignatura>> {
-        return axios.get(URL_BASE + '/' + idAsignatura);
+    getById(id: number) {
+        return axios.get(`${API_URL}/${id}`);
     }
 
-    create(asignatura: Asignatura): Promise<AxiosResponse<Asignatura>> {
-        return axios.post(URL_BASE, asignatura);
+    create(asignatura: any) {
+        return axios.post(API_URL, asignatura);
     }
 
-    update(idAsignatura: number, asignatura: Asignatura): Promise<AxiosResponse<void>> {
-        return axios.put(URL_BASE + '/' + idAsignatura, asignatura);
+    update(id: number, asignatura: any) {
+        return axios.put(`${API_URL}/${id}`, asignatura);
     }
 
-    delete(idAsignatura: number): Promise<AxiosResponse<void>> {
-        return axios.delete(URL_BASE + '/' + idAsignatura);
+    delete(id: number) {
+        return axios.delete(`${API_URL}/${id}`);
     }
 }
 
