@@ -23,6 +23,11 @@ const AppLayout = () => {
                     label: 'Alumno',
                     icon: 'pi pi-fw pi-users',
                     command: () => navigate('/alumno')
+                },
+                {
+                    label: 'Alumno',
+                    icon: 'pi pi-fw pi-users',
+                    command: () => navigate('/alumno')
                 }
             ]
         }
