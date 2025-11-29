@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (username:string, password:string) => {
         const user = await loginUser(username, password);
         setDocente(user);
+        localStorage.setItem("user", JSON.stringify(user));
         setLoggedIn(true);
     };
 

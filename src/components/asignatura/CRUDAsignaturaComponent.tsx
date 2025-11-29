@@ -20,7 +20,7 @@ export interface Asignatura {
 }
 
 export default function CRUDAsignaturaComponent() {
-    const { user } = useAuth();
+    
     const emptyAsignatura: Asignatura = {
         idAsignatura: 0,
         nombre: '',
@@ -40,6 +40,9 @@ export default function CRUDAsignaturaComponent() {
 
     useEffect(() => {
         // Replace with query by id docente
+        const user = JSON.parse(localStorage.getItem('user') || '');
+        console.log(user);
+
         AsignaturaService.findAll()
             .then((response) => setAsignaturas(response.data))
             .catch(e => console.log(e));

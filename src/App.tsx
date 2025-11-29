@@ -16,6 +16,7 @@ import RegisterPage from './components/login/RegisterPage.tsx'
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 // import NavigationHistory from "./components/breadc/AsignaturaB.tsx";
+import { useState, useEffect, useRef } from 'react';
 
 const PrivateRoute = ({ children }) => {
     const { loggedIn } = useAuth();
@@ -23,6 +24,16 @@ const PrivateRoute = ({ children }) => {
 };
 
 const AppLayout = () => {
+    
+    // useEffect(() => {
+    //     const { user,  setDocente } = useAuth();
+    //     console.log("user",user);
+    //     if (!user) {
+    //         const userLocal = JSON.parse(localStorage.getItem('user')||'');
+    //         console.log("userlocal",userLocal);
+    //         setDocente(user);
+    //     }
+    // }, []);
 
     const navigate = useNavigate();
     const sidebarItems = [
