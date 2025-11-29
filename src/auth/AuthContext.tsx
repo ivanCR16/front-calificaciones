@@ -6,9 +6,11 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     const [loggedIn, setLoggedIn] = useState(isAuthenticated());
+    const [docente, setDocente ] = useState({});
     
     const login = async (username:string, password:string) => {
-        await loginUser(username, password);
+        const user = await loginUser(username, password);
+        setDocente(user);
         setLoggedIn(true);
     };
 
@@ -18,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ loggedIn, login, logout }}>
+        <AuthContext.Provider value={{ loggedIn, user:docente, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

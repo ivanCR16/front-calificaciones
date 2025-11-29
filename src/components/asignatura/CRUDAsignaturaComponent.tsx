@@ -10,6 +10,8 @@ import { InputIcon } from 'primereact/inputicon';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import AsignaturaService from "../../Service/AsignaturaService.tsx";
+import { useAuth } from "./AuthContext";
+import { useNavigation } from "../../navigation/NavigationContext.tsx";
 
 export interface Asignatura {
     idAsignatura: number;
@@ -34,6 +36,7 @@ export default function CRUDAsignaturaComponent() {
     const dt = useRef<DataTable<Asignatura[]>>(null);
 
     useEffect(() => {
+        // Replace with query by id docente
         AsignaturaService.findAll().then((response) => setAsignaturas(response.data));
     }, []);
 
