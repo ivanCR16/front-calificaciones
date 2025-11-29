@@ -10,18 +10,21 @@ import { InputIcon } from 'primereact/inputicon';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import AsignaturaService from "../../Service/AsignaturaService.tsx";
-import { useAuth } from "./AuthContext";
-import { useNavigation } from "../../navigation/NavigationContext.tsx";
+import { useAuth } from "../../auth/AuthContext.tsx";
+// import { useNavigation } from "../../navigation/NavigationContext.tsx";
 
 export interface Asignatura {
     idAsignatura: number;
     nombre: string;
+    docente: object;
 }
 
 export default function CRUDAsignaturaComponent() {
+    const { user } = useAuth();
     const emptyAsignatura: Asignatura = {
         idAsignatura: 0,
-        nombre: ''
+        nombre: '',
+        docente:{}
     };
 
     const [asignaturas, setAsignaturas] = useState<Asignatura[]>([]);
@@ -37,7 +40,9 @@ export default function CRUDAsignaturaComponent() {
 
     useEffect(() => {
         // Replace with query by id docente
-        AsignaturaService.findAll().then((response) => setAsignaturas(response.data));
+        AsignaturaService.findAll()
+            .then((response) => setAsignaturas(response.data))
+            .catch(e => console.log(e));
     }, []);
 
     const openNew = () => {
@@ -62,10 +67,16 @@ export default function CRUDAsignaturaComponent() {
     const saveAsignatura = async () => {
         setSubmitted(true);
         if (asignatura.nombre.trim()) {
+            asignatura.docente = {
+                idDocente: user.idDocente
+            };
+            console.log("before::",asignatura);
             const _asignaturas = [...asignaturas];
             const _asignatura = { ...asignatura };
 
             if (asignatura.idAsignatura) {
+                console.log("##########",asignatura);
+                console.log("##########",asignatura.idAsignatura);
                 AsignaturaService.update(asignatura.idAsignatura, asignatura);
                 const index = findIndexById(asignatura.idAsignatura);
                 _asignaturas[index] = _asignatura;
@@ -78,7 +89,9 @@ export default function CRUDAsignaturaComponent() {
                 });
 
             } else {
+                console.log("##########",_asignatura);
                 _asignatura.idAsignatura = await createAsignatura(_asignatura);
+
                 _asignaturas.push(_asignatura);
 
                 toast.current?.show({
@@ -96,19 +109,18 @@ export default function CRUDAsignaturaComponent() {
     };
 
     const createAsignatura = async (_asignatura: Asignatura) => {
-        let idAsignatura = 0;
+        let idAsignaturaResponse = 0;
 
-        const newAsignatura = {
-            nombre: _asignatura.nombre
-        };
+        
+        const { idAsignatura, ...newAsignatura } = _asignatura;
 
         await AsignaturaService.create(newAsignatura)
             .then((response) => {
-                idAsignatura = response.data.idAsignatura;
+                idAsignaturaResponse = response.data.idAsignatura;
             })
             .catch(error => console.log(error));
 
-        return idAsignatura;
+        return idAsignaturaResponse;
     };
 
     const editAsignatura = (asignatura: Asignatura) => {

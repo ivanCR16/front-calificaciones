@@ -29,7 +29,8 @@ const AppLayout = () => {
             { label: 'Grupos', icon: 'pi pi-fw pi-objects-column', command: () => navigate('/grupos')},
             { label: 'Alumno', icon: 'pi pi-fw pi-users', command: () => navigate('/alumno')},
             { label: 'Asignatura', icon: 'pi pi-fw pi-users', command: () => navigate('/asignatura')},
-            { label: 'Tema', icon: 'pi pi-fw pi-users', command: () => navigate('/tema') }
+            { label: 'Tema', icon: 'pi pi-fw pi-users', command: () => navigate('/tema') },
+            { label: 'Actividad', icon: 'pi pi-fw pi-users', command: () => navigate('/actividad') }
     ];
     
     // const sidebarItems = [
@@ -72,8 +73,9 @@ const AppLayout = () => {
                         <Route path="/alumno" element={<CRUDAlumnoComponent />} />
                         <Route path="/asignatura" element={<CRUDAsignaturaComponent />} />
                         <Route path="/tema" element={<CRUDTemaComponent />} />
+                        <Route path="/actividad" element={<CRUDTemaComponent />} />
                         <Route path="/" element={<h2>Bienvenido al Dashboard</h2>} />
-                        <Route path="/asignaturas" element={<CRUDAsignaturaComponent />} />
+                        {/* <Route path="/asignaturas" element={<CRUDAsignaturaComponent />} /> */}
                     {/* <Route path="/asignatura/:idAsignatura" element={<GruposPage />} />
                     <Route path="/asignatura/:idAsignatura/grupo/:idGrupo" element={<TemasPage />} />
                     <Route path="/grupo/:idGrupo/tema/:idTema" element={<ActividadesPage />} />

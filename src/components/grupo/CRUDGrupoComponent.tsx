@@ -171,7 +171,7 @@ export default function CRUDGrupoComponent() {
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement> | DropdownChangeEvent, name: keyof any) => {
         let val: any;
-
+        
         if (name === 'asignatura') {
             val = (e as DropdownChangeEvent).value; 
         } else {
