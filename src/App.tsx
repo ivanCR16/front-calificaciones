@@ -10,11 +10,12 @@ import CRUDAlumnoComponent from './components/alumno/CRUDAlumnoComponent';
 import CRUDAsignaturaComponent from "./components/asignatura/CRUDAsignaturaComponent.tsx";
 import CRUDTemaComponent from "./components/tema/CRUDTemaComponent.tsx";
 import { AuthProvider } from './auth/AuthContext.tsx';
-import LoginPage from './components/login/LoginForm.tsx'
+import LoginPage from './components/login/LoginPage.tsx'
 import React from 'react';
 import RegisterPage from './components/login/RegisterPage.tsx'
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
+// import NavigationHistory from "./components/breadc/AsignaturaB.tsx";
 
 const PrivateRoute = ({ children }) => {
     const { loggedIn } = useAuth();
@@ -60,6 +61,7 @@ const AppLayout = () => {
             <div className="layout-topbar">
                 <Menubar model={[]} start={startContent} end={endContent} style={{border: 'none', borderRadius: 0}} />
             </div>
+            {/* <NavigationHistory history={history} /> */}
             <div className="layout-body">
                 <aside className="layout-sidebar"> 
                     <Menu model={sidebarItems} style={{ width: '100%', border: 'none' }} />
@@ -71,6 +73,11 @@ const AppLayout = () => {
                         <Route path="/asignatura" element={<CRUDAsignaturaComponent />} />
                         <Route path="/tema" element={<CRUDTemaComponent />} />
                         <Route path="/" element={<h2>Bienvenido al Dashboard</h2>} />
+                        {/* <Route path="/asignaturas" element={<AsignaturasPage />} /> */}
+                    {/* <Route path="/asignatura/:idAsignatura" element={<GruposPage />} />
+                    <Route path="/asignatura/:idAsignatura/grupo/:idGrupo" element={<TemasPage />} />
+                    <Route path="/grupo/:idGrupo/tema/:idTema" element={<ActividadesPage />} />
+                    <Route path="/actividad/:idActividad/alumno/:idAlumno" element={<AlumnoPage />} /> */}
                     </Routes>
                 </main>
 

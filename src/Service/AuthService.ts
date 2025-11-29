@@ -66,7 +66,6 @@ export const loginUser = async (username:string, password:string) => {
 
         // Guarda tokens o refreshtokens
         localStorage.setItem("access_token", data.idDocente);
-        console.log(data.idDocente)
         return data;
     } catch (error) {
         throw error;
