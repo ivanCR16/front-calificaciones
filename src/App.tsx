@@ -9,37 +9,36 @@ import CRUDGrupoComponent from './components/grupo/CRUDGrupoComponent';
 import CRUDAlumnoComponent from './components/alumno/CRUDAlumnoComponent';
 import CRUDAsignaturaComponent from "./components/asignatura/CRUDAsignaturaComponent.tsx";
 import CRUDTemaComponent from "./components/tema/CRUDTemaComponent.tsx";
+import { AuthProvider } from './auth/AuthContext.tsx';
+import LoginPage from './components/login/LoginForm.tsx'
+import React from 'react';
+import RegisterPage from './components/login/RegisterPage.tsx'
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
 
+const PrivateRoute = ({ children }) => {
+    const { loggedIn } = useAuth();
+    return loggedIn ? children : <Navigate to="/login" replace />;
+};
 
 const AppLayout = () => {
+
     const navigate = useNavigate();
     const sidebarItems = [
-        {
-            label: 'Documentos',
-            items: [
-                {
-                    label: 'Grupos',
-                    icon: 'pi pi-fw pi-objects-column',
-                    command: () => navigate('/grupos')
-                },
-                {
-                    label: 'Alumno',
-                    icon: 'pi pi-fw pi-users',
-                    command: () => navigate('/alumno')
-                },
-                {
-                    label: 'Asignatura',
-                    icon: 'pi pi-fw pi-users',
-                    command: () => navigate('/asignatura')
-                },
-                {
-                    label: 'Tema',
-                    icon: 'pi pi-fw pi-users',
-                    command: () => navigate('/tema')
-                }
-            ]
-        }
+            { label: 'Grupos', icon: 'pi pi-fw pi-objects-column', command: () => navigate('/grupos')},
+            { label: 'Alumno', icon: 'pi pi-fw pi-users', command: () => navigate('/alumno')},
+            { label: 'Asignatura', icon: 'pi pi-fw pi-users', command: () => navigate('/asignatura')},
+            { label: 'Tema', icon: 'pi pi-fw pi-users', command: () => navigate('/tema') }
     ];
+    
+    // const sidebarItems = [
+    //     {
+    //         label: 'Documentos',
+    //         items: [
+
+    //         ]
+    //     }
+    // ];
     const startContent = (
         <div className="flex align-items-center">
             <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" style={{marginRight: '10px'}} />
@@ -82,8 +81,27 @@ const AppLayout = () => {
 
 export default function App() {
     return (
-        <Router>
-            <AppLayout />
-        </Router>
+        <AuthProvider>
+            <Router>
+                <Routes>
+
+                    {/* Ruta pública */}
+                    <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+
+                    {/* Rutas protegidas */}
+                    <Route 
+                        path="/*" 
+                        element={
+                            <PrivateRoute>
+                                <AppLayout />
+                            </PrivateRoute>
+                        } 
+                    />
+
+                </Routes>
+                {/* <AppLayout /> */}
+            </Router>
+        </AuthProvider>
     );
 }
