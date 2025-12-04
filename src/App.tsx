@@ -11,12 +11,11 @@ import CRUDAsignaturaComponent from "./components/asignatura/CRUDAsignaturaCompo
 import CRUDTemaComponent from "./components/tema/CRUDTemaComponent.tsx";
 import { AuthProvider } from './auth/AuthContext.tsx';
 import LoginPage from './components/login/LoginPage.tsx'
-import React from 'react';
 import RegisterPage from './components/login/RegisterPage.tsx'
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 // import NavigationHistory from "./components/breadc/AsignaturaB.tsx";
-import { useState, useEffect, useRef } from 'react';
+import CargarCalificacionStepper from './components/calificaciones/CargarCalificacionStepper.tsx';
 
 const PrivateRoute = ({ children }) => {
     const { loggedIn } = useAuth();
@@ -41,7 +40,8 @@ const AppLayout = () => {
             { label: 'Alumno', icon: 'pi pi-fw pi-users', command: () => navigate('/alumno')},
             { label: 'Asignatura', icon: 'pi pi-fw pi-users', command: () => navigate('/asignatura')},
             { label: 'Tema', icon: 'pi pi-fw pi-users', command: () => navigate('/tema') },
-            { label: 'Actividad', icon: 'pi pi-fw pi-users', command: () => navigate('/actividad') }
+            { label: 'Actividad', icon: 'pi pi-fw pi-users', command: () => navigate('/actividad') },
+            { label: 'Calificaciones', icon: 'pi pi-fw pi-users', command: () => navigate('/calificacion') }
     ];
     
     // const sidebarItems = [
@@ -85,6 +85,7 @@ const AppLayout = () => {
                         <Route path="/asignatura" element={<CRUDAsignaturaComponent />} />
                         <Route path="/tema" element={<CRUDTemaComponent />} />
                         <Route path="/actividad" element={<CRUDTemaComponent />} />
+                        <Route path="/calificacion" element={<CargarCalificacionStepper />} />
                         <Route path="/" element={<h2>Bienvenido al Dashboard</h2>} />
                         {/* <Route path="/asignaturas" element={<CRUDAsignaturaComponent />} /> */}
                     {/* <Route path="/asignatura/:idAsignatura" element={<GruposPage />} />

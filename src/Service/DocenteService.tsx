@@ -18,5 +18,9 @@ class DocenteService {
     delete(idDocente: number): Promise<AxiosResponse<any, any>> {
         return axios.delete(`${URL_BASE}/${idDocente}`);
     }
+
+    findAsignaturas(idDocente: number){
+        return axios.get(`${URL_BASE}/${idDocente}/asignaturas`);
+    }
 }
 export default new DocenteService();

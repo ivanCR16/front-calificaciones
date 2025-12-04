@@ -23,6 +23,10 @@ class TemaService {
     delete(id: number) {
         return axios.delete(`${URL_BASE}/${id}`);
     }
+    
+    findActivitiesByTopicId(idTema: number){
+        return axios.get(`${URL_BASE}/${idTema}/actividades`);
+    }
 }
 
 export default new TemaService();

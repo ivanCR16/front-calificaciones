@@ -38,7 +38,7 @@ export default function CRUDAsignaturaComponent() {
 
     const dt = useRef<DataTable<Asignatura[]>>(null);
 
-    useEffect(() => {
+    /* useEffect(() => {
         // Replace with query by id docente
         const user = JSON.parse(localStorage.getItem('user') || '');
         console.log(user);
@@ -46,7 +46,7 @@ export default function CRUDAsignaturaComponent() {
         AsignaturaService.findAll()
             .then((response) => setAsignaturas(response.data))
             .catch(e => console.log(e));
-    }, []);
+    }, []); */
 
     const openNew = () => {
         setAsignatura(emptyAsignatura);

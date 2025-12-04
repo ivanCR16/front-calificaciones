@@ -22,6 +22,10 @@ class GrupoService {
     delete(idGrupo: number): Promise<AxiosResponse<void>> {
         return axios.delete(URL_BASE + '/' + idGrupo);
     }
+
+    findStudentsByGroupId(idGrupo: number){
+        return axios.get(`${URL_BASE}/${idGrupo}/alumnos`);
+    }
 }
 
 export default new GrupoService();

@@ -23,6 +23,14 @@ class AsignaturaService {
     delete(id: number) {
         return axios.delete(`${URL_BASE}/${id}`);
     }
+
+    findGroups(idAsignatura: number){
+        return axios.get(`${URL_BASE}/${idAsignatura}/grupos`);
+    }
+
+    findTopicsByAsignaturaId(idAsignatura: number){
+        return axios.get(`${URL_BASE}/${idAsignatura}/temas`);
+    }
 }
 
 export default new AsignaturaService();
