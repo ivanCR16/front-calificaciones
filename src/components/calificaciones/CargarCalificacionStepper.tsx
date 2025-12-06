@@ -1,5 +1,5 @@
 // src/components/CargarCalificacionStepper.tsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Stepper } from 'primereact/stepper';
 import { StepperPanel } from 'primereact/stepperpanel';
 import { Button } from 'primereact/button';
@@ -40,7 +40,29 @@ export default function CargarCalificacionStepper() {
         idAlumno: null,
     });
     
-    const [idDocente, setIdDocente] = useState(1); // Simulación: Obtener ID del docente del contexto o sesión
+    // Inicializamos en null para indicar que la carga del ID está pendiente
+    const [idDocente, setIdDocente] = useState<any>(null); 
+
+    // Utilizamos useEffect para cargar el ID del docente directamente del localStorage
+    useEffect(() => {
+        // 1. Obtener la cadena de texto (que contiene el ID)
+        const idUsuarioString = localStorage.getItem('access_token');
+        
+        if (idUsuarioString) {
+            // 2. Convertir la cadena a número entero
+            const id = parseInt(idUsuarioString, 10); 
+            
+            // 3. Validar que la conversión haya sido exitosa (no sea NaN)
+            if (!isNaN(id)) {
+                setIdDocente(id);
+            } else {
+                console.error("El valor en 'access_token' no es un número válido:", idUsuarioString);
+            }
+        } else {
+            console.warn("No se encontró 'access_token' en localStorage.");
+            // Opcional: Redirigir al login si no hay token/ID
+        }
+    }, []); // Array vacío para ejecutar solo una vez al montar
 
     // Función para manejar la selección en un paso
     const handleSeleccion = (key: keyof SeleccionState, id: number | null) => {

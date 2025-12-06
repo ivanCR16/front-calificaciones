@@ -45,7 +45,7 @@ const DeleteAlumnoDialog: React.FC<DeleteAlumnoDialogProps> = ({
                     <span>
                         ¿Está seguro de que desea eliminar al alumno **{alumno.nombre} {alumno.apellidos}**?
                         <br/>
-                        <small>No. Control: {alumno.no_control}</small>
+                        <small>No. Control: {alumno.noControl}</small>
                     </span>
                 )}
             </div>

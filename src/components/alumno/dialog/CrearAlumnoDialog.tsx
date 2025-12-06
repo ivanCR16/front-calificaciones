@@ -8,7 +8,7 @@ import { classNames } from 'primereact/utils';
 interface AlumnoForm {
     nombre: string;
     apellidos: string;
-    no_control: string;
+    noControl: string;
     correo: string;
 }
 
@@ -85,17 +85,17 @@ const CrearAlumnoDialog: React.FC<AlumnoDialogProps> = ({
 
             {/* Campo: No. Control */}
             <div className="field">
-                <label htmlFor="no_control" className="font-bold">
+                <label htmlFor="noControl" className="font-bold">
                     Número de Control
                 </label>
                 <InputText 
-                    id="no_control" 
-                    value={alumnoForm.no_control} 
-                    onChange={(e) => onInputChange(e, 'no_control')} 
+                    id="noControl" 
+                    value={alumnoForm.noControl} 
+                    onChange={(e) => onInputChange(e, 'noControl')} 
                     required 
-                    className={classNames({ 'p-invalid': submitted && !alumnoForm.no_control })} 
+                    className={classNames({ 'p-invalid': submitted && !alumnoForm.noControl })} 
                 />
-                {submitted && !alumnoForm.no_control && <small className="p-error">El número de control es requerido.</small>}
+                {submitted && !alumnoForm.noControl && <small className="p-error">El número de control es requerido.</small>}
             </div>
 
             {/* Campo: Correo */}

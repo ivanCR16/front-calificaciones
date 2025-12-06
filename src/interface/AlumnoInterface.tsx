@@ -4,7 +4,7 @@ export interface Alumno {
     idAlumno:       number | null;
     nombre:         string;
     apellidos:      string;
-    no_control:     string;
+    noControl:     string;
     correo:         string;
     calificaciones: Calificacion[];
 }

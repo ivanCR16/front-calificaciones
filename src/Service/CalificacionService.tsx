@@ -18,5 +18,9 @@ class CalificacionService {
     delete(idCalificacion: number): Promise<AxiosResponse<any, any>> {
         return axios.delete(`${URL_BASE}/${idCalificacion}`);
     }
+
+    findByNoControl(NoControl: string): Promise<AxiosResponse<any, any>> {
+        return axios.get(`${URL_BASE}/alumno/noControl/${NoControl}`);
+    }
 }
 export default new CalificacionService();

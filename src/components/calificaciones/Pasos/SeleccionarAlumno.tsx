@@ -103,7 +103,7 @@ export default function SeleccionarAlumno({ idGrupo, onSelect }: SeleccionarAlum
                 paginator
             >
                 <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
-                <Column field="no_control" header="Num control" sortable></Column>
+                <Column field="noControl" header="Num control" sortable></Column>
                 <Column field="nombre" header="Nombre" sortable></Column>
                 <Column field="apellidos" header="Apellidos" sortable></Column>
                 <Column field="correo" header="Correo" sortable></Column>

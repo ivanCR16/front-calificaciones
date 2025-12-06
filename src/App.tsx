@@ -16,6 +16,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 // import NavigationHistory from "./components/breadc/AsignaturaB.tsx";
 import CargarCalificacionStepper from './components/calificaciones/CargarCalificacionStepper.tsx';
+import ModificarCalificacion from './components/calificaciones/ModificarCalificacion.tsx';
 
 const PrivateRoute = ({ children }) => {
     const { loggedIn } = useAuth();
@@ -35,15 +36,35 @@ const AppLayout = () => {
     // }, []);
 
     const navigate = useNavigate();
-    const sidebarItems = [
-            { label: 'Grupos', icon: 'pi pi-fw pi-objects-column', command: () => navigate('/grupos')},
-            { label: 'Alumno', icon: 'pi pi-fw pi-users', command: () => navigate('/alumno')},
-            { label: 'Asignatura', icon: 'pi pi-fw pi-users', command: () => navigate('/asignatura')},
-            { label: 'Tema', icon: 'pi pi-fw pi-users', command: () => navigate('/tema') },
-            { label: 'Actividad', icon: 'pi pi-fw pi-users', command: () => navigate('/actividad') },
-            { label: 'Calificaciones', icon: 'pi pi-fw pi-users', command: () => navigate('/calificacion') }
-    ];
     
+    const sidebarItems = [
+        { label: 'Grupos', icon: 'pi pi-fw pi-objects-column', command: () => navigate('/grupos')},
+        { label: 'Alumno', icon: 'pi pi-fw pi-users', command: () => navigate('/alumno')},
+        { label: 'Asignatura', icon: 'pi pi-fw pi-users', command: () => navigate('/asignatura')},
+        { label: 'Tema', icon: 'pi pi-fw pi-users', command: () => navigate('/tema') },
+        { label: 'Actividad', icon: 'pi pi-fw pi-users', command: () => navigate('/actividad') },
+        
+        // --- NUEVO ELEMENTO CON SUBMENÚ (CALIFICACIONES) ---
+        { 
+            label: 'Calificaciones', 
+            icon: 'pi pi-fw pi-list', // Icono principal para el grupo
+            // La propiedad 'command' se omite o se usa para alternar la expansión si tu componente de menú lo requiere.
+            
+            // El array 'items' define el submenú que se desplegará:
+            items: [
+                { 
+                    label: 'Cargar (Nuevo)', 
+                    icon: 'pi pi-upload', 
+                    command: () => navigate('/calificacion/cargar') 
+                },
+                { 
+                    label: 'Modificar (Editar)', 
+                    icon: 'pi pi-pencil', 
+                    command: () => navigate('/calificacion/modificar') 
+                }
+            ]
+        }
+    ];
     // const sidebarItems = [
     //     {
     //         label: 'Documentos',
@@ -85,7 +106,8 @@ const AppLayout = () => {
                         <Route path="/asignatura" element={<CRUDAsignaturaComponent />} />
                         <Route path="/tema" element={<CRUDTemaComponent />} />
                         <Route path="/actividad" element={<CRUDTemaComponent />} />
-                        <Route path="/calificacion" element={<CargarCalificacionStepper />} />
+                        <Route path="/calificacion/cargar" element={<CargarCalificacionStepper />} />
+                        <Route path="/calificacion/modificar" element={<ModificarCalificacion />} />
                         <Route path="/" element={<h2>Bienvenido al Dashboard</h2>} />
                         {/* <Route path="/asignaturas" element={<CRUDAsignaturaComponent />} /> */}
                     {/* <Route path="/asignatura/:idAsignatura" element={<GruposPage />} />

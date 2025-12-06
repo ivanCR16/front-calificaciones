@@ -19,14 +19,14 @@ import type { DropdownChangeEvent } from 'primereact/dropdown';
 interface AlumnoForm {
     nombre: string;
     apellidos: string;
-    no_control: string;
+    noControl: string;
     correo: string;
 }
 
 const emptyAlumnoForm: AlumnoForm = {
     nombre: '',
     apellidos: '',
-    no_control: '',
+    noControl: '',
     correo: '',
 };
 
@@ -34,7 +34,7 @@ const emptyAlumno: Alumno = {
     idAlumno: null,
     nombre: '',
     apellidos: '',
-    no_control: '',
+    noControl: '',
     correo: '',
     calificaciones: [],
 };
@@ -108,7 +108,7 @@ export default function CRUDAlumnoComponent() {
         setSubmitted(true);
         
         // Validación de campos clave
-        if (alumnoForm.nombre.trim() && alumnoForm.no_control.trim()) {
+        if (alumnoForm.nombre.trim() && alumnoForm.noControl.trim()) {
             
             // Combinar los datos del formulario con los del objeto Alumno (para edición)
             let _alumno = { ...alumno, ...alumnoForm }; 
@@ -154,7 +154,7 @@ export default function CRUDAlumnoComponent() {
         setAlumnoForm({ 
             nombre: alumno.nombre,
             apellidos: alumno.apellidos,
-            no_control: alumno.no_control,
+            noControl: alumno.noControl,
             correo: alumno.correo,
         });
         setAlumnoDialog(true);
@@ -249,7 +249,7 @@ export default function CRUDAlumnoComponent() {
                 >
                     <Column selectionMode="multiple" exportable={false}></Column>
                     <Column field="idAlumno" header="ID" sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="no_control" header="No. Control" sortable style={{ minWidth: '10rem' }}></Column>
+                    <Column field="noControl" header="No. Control" sortable style={{ minWidth: '10rem' }}></Column>
                     <Column field="nombre" header="Nombre" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="apellidos" header="Apellidos" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="correo" header="Correo" sortable style={{ minWidth: '16rem' }}></Column>
