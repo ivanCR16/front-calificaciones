@@ -1,27 +1,27 @@
-// src/components/Pasos/SeleccionarAlumno.tsx
+
 import React, { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Message } from 'primereact/message'; 
 
-// *** Importación simulada: Reemplaza con tu servicio real para Alumnos/Grupos ***
-// Asumiremos un servicio para obtener alumnos por grupo
+
+
 import GrupoService from '../../../Service/GrupoService'; 
 
-// Interfaces
+
 interface Alumno {
     idAlumno: number;
-    codigo: string; // Código de estudiante
+    codigo: string; 
     nombreCompleto: string;
 }
 
 interface SeleccionarAlumnoProps {
-    idGrupo: any; // ID del grupo seleccionado en el paso anterior (Paso 2)
+    idGrupo: any; 
     onSelect: (id: number) => void;
 }
 
-// Simulación de datos (En un caso real, esto vendría de GrupoService.findStudentsByGroupId)
+
 const mockAlumnos: Alumno[] = [
     { idAlumno: 501, codigo: 'EST-1001', nombreCompleto: 'García, Ana Sofía' },
     { idAlumno: 502, codigo: 'EST-1002', nombreCompleto: 'Pérez, Juan Camilo' },
@@ -35,13 +35,13 @@ export default function SeleccionarAlumno({ idGrupo, onSelect }: SeleccionarAlum
     const [loading, setLoading] = useState(false);
     const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
 
-    // Cargar alumnos cuando el idGrupo cambie
+    
     useEffect(() => {
         if (idGrupo) {
             setLoading(true);
-            setSelectedAlumno(null); // Limpiar selección anterior
+            setSelectedAlumno(null); 
             
-            // --- Lógica de Llamada API REAL ---
+            
             GrupoService.findStudentsByGroupId(idGrupo.idGrupo)
                 .then(response => {
                     setAlumnos(response.data);
@@ -53,27 +53,23 @@ export default function SeleccionarAlumno({ idGrupo, onSelect }: SeleccionarAlum
                 .finally(() => setLoading(false));
            
 
-            // --- Simulación (Reemplazar con el código de arriba) ---
-            /* console.log(`Buscando alumnos para el Grupo ID: ${idGrupo}`);
-            setTimeout(() => {
-                setAlumnos(mockAlumnos); 
-                setLoading(false);
-            }, 800); */
+            
+           
         } else {
             setAlumnos([]);
             setSelectedAlumno(null);
         }
     }, [idGrupo]);
 
-    // Función para manejar la confirmación de la selección y notificar al padre
+    
     const handleConfirmarSeleccion = () => {
         if (selectedAlumno) {
-            // Llama a la función del padre para actualizar el estado global
+            
             onSelect(selectedAlumno.idAlumno);
         }
     };
     
-    // Si no hay idGrupo, muestra un mensaje de advertencia
+    
     if (!idGrupo) {
         return (
             <Message 

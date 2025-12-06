@@ -1,12 +1,11 @@
-// src/components/SeleccionarAsignatura.tsx
+
 import React, { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import AsignaturaService from '../../../Service/AsignaturaService';
 import DocenteService from '../../../Service/DocenteService';
 
-// Interfaces de ejemplo (usar las reales si están disponibles)
+
 interface Asignatura {
     idAsignatura: number;
     nombre: string;
@@ -24,11 +23,11 @@ export default function SeleccionarAsignatura({ idDocente, onSelect }: Seleccion
     const [selectedAsignatura, setSelectedAsignatura] = useState<Asignatura | null>(null);
     const [loading, setLoading] = useState(true);
 
-    // Cargar asignaturas al montar el componente (usando el idDocente)
+    
     useEffect(() => {
         if (idDocente) {
             setLoading(true);
-            // Simulación de la llamada a la API
+            
             DocenteService.findAsignaturas(idDocente)
                 .then(response => {
                     setAsignaturas(response.data);
@@ -41,7 +40,7 @@ export default function SeleccionarAsignatura({ idDocente, onSelect }: Seleccion
         }
     }, [idDocente]);
 
-    // Botón de acción en cada fila
+    
     const actionBodyTemplate = (rowData: Asignatura) => {
         return (
             <Button 

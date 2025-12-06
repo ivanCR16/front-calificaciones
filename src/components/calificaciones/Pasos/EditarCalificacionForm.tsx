@@ -1,22 +1,22 @@
-// src/components/Modificar/EditarCalificacionForm.tsx
+
 import React, { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { InputNumber } from 'primereact/inputnumber';
 import { Message } from 'primereact/message';
 import { Panel } from 'primereact/panel';
 import { Calendar } from 'primereact/calendar';
-import { ProgressSpinner } from 'primereact/progressspinner'; // Importar ProgressSpinner
+import { ProgressSpinner } from 'primereact/progressspinner'; 
 import CalificacionService from '../../../Service/CalificacionService';
 
-// Definición de los indicadores (A, B, C, D, E, F) y el máximo
+
 const INDICADORES = ['A', 'B', 'C', 'D', 'E', 'F']; 
 const CALIFICACION_MAXIMA = 100;
 
-// Interfaz para los datos que vienen del servidor
+
 interface CalificacionData {
     idCalificacion: number; 
     calificacionEspecifica: number;
-    fechaCaptura: string; // Puede ser un string o Date
+    fechaCaptura: string; 
     indicadorA: number; 
     indicadorB: number; 
     indicadorC: number; 
@@ -27,41 +27,41 @@ interface CalificacionData {
     idAlumno: number;
 }
 
-// Propiedades que el componente de Edición recibirá: SOLO EL ID
+
 interface EditarCalificacionProps {
-    idCalificacion: number; // 🛑 SOLO RECIBIMOS EL ID
+    idCalificacion: number; 
     onUpdateSuccess: () => void;
     onCancel: () => void;
 }
 
 export default function EditarCalificacionForm({
-    idCalificacion, // 🛑 Usamos idCalificacion en lugar de 'calificacion'
+    idCalificacion, 
     onUpdateSuccess,
     onCancel
 }: EditarCalificacionProps) {
     
-    const [initialLoading, setInitialLoading] = useState(true); // Estado de carga inicial
-    const [data, setData] = useState<CalificacionData | null>(null); // Datos cargados del servidor
+    const [initialLoading, setInitialLoading] = useState(true); 
+    const [data, setData] = useState<CalificacionData | null>(null); 
     
-    // 1. Estados que manejan el formulario (inicializados a null)
+    
     const [calificacionEspecifica, setCalificacionEspecifica] = useState<number | null>(null);
     const [fechaCaptura, setFechaCaptura] = useState<any>(null);
     const [indicadores, setIndicadores] = useState<Record<string, number | null>>({});
     const [saving, setSaving] = useState(false);
 
-    // --- EFECTO: Buscar datos al montar o si el ID cambia ---
+    
     useEffect(() => {
         const fetchCalificacion = async () => {
             setInitialLoading(true);
             try {
-                // 🛑 Llamada al servicio para obtener el registro por ID
+                
                 const response = await CalificacionService.findById(idCalificacion);
                 const fetchedData: CalificacionData = response.data;
                 setData(fetchedData);
                 
-                // 2. Inicializar los estados del formulario con los datos obtenidos
+                
                 setCalificacionEspecifica(fetchedData.calificacionEspecifica);
-                // Convertir la fecha de string a Date para el componente Calendar
+                
                 setFechaCaptura(new Date(fetchedData.fechaCaptura)); 
                 setIndicadores({
                     'A': fetchedData.indicadorA,
@@ -74,7 +74,7 @@ export default function EditarCalificacionForm({
 
             } catch (error) {
                 console.error("Error al buscar la calificación por ID:", error);
-                // Si falla la carga, mostramos el mensaje de error del componente
+                
                 setData(null);
             } finally {
                 setInitialLoading(false);
@@ -86,9 +86,9 @@ export default function EditarCalificacionForm({
         } else {
             onCancel(); 
         }
-    }, [idCalificacion, onCancel]); // Dependencia en idCalificacion y onCancel
+    }, [idCalificacion, onCancel]); 
 
-    // --- Función para actualizar un indicador específico (sin cambios) ---
+    
     const handleIndicatorChange = (key: string, value: number | null) => {
         if (value !== null && value > CALIFICACION_MAXIMA) {
              value = CALIFICACION_MAXIMA;
@@ -96,13 +96,13 @@ export default function EditarCalificacionForm({
         setIndicadores(prev => ({ ...prev, [key]: value }));
     };
 
-    // --- Lógica de Actualización ---
+    
     const handleActualizar = async () => { 
-        // 🛑 Usamos 'data' para obtener el ID de la calificación y las claves no editables
+        
         const currentDate = new Date();
         if (!data) return; 
         
-        // Validación
+        
         if (calificacionEspecifica === null || calificacionEspecifica < 0 || !fechaCaptura) {
             alert("Por favor, ingrese la Calificación Específica y la Fecha de Captura.");
             return;
@@ -110,7 +110,7 @@ export default function EditarCalificacionForm({
         
         setSaving(true);
         
-        // --- Estructura de Datos para el UPDATE ---
+        
         const calificacionData = {
             fechaCaptura: currentDate.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-'),
             calificacionEspecifica: calificacionEspecifica,
@@ -124,7 +124,7 @@ export default function EditarCalificacionForm({
         console.log("ACTUALIZAR",data.idCalificacion, calificacionData)
 
         try {
-            // 🛑 Llamar al método UPDATE o EDIT con el ID del registro
+            
             await CalificacionService.update(data.idCalificacion, calificacionData); 
             onUpdateSuccess(); 
         } catch (error) {
@@ -136,7 +136,7 @@ export default function EditarCalificacionForm({
         }
     };
     
-    // 🛑 Renderizado condicional: 1. Spinner de carga 🛑
+    
     if (initialLoading) {
         return (
             <div className="flex justify-content-center p-5">
@@ -146,7 +146,7 @@ export default function EditarCalificacionForm({
         );
     }
 
-    // 🛑 Renderizado condicional: 2. Mensaje de error si la carga falla
+    
     if (!data) {
         return (
             <div className="p-5">
@@ -158,7 +158,7 @@ export default function EditarCalificacionForm({
         );
     }
     
-    // 🛑 Renderizado Final del Formulario (Solo si data existe)
+    
     return (
         <div className="p-fluid">
             <h3>Modificación de Calificación Final</h3> 

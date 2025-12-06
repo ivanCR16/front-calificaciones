@@ -1,4 +1,4 @@
-// src/components/Pasos/CargarCalificacion.tsx
+
 import React, { useState } from 'react';
 import { Button } from 'primereact/button';
 import { InputNumber } from 'primereact/inputnumber';
@@ -7,11 +7,11 @@ import { Panel } from 'primereact/panel';
 import { Calendar } from 'primereact/calendar'; 
 import CalificacionService from '../../../Service/CalificacionService';
 
-// Indicadores que coinciden con la estructura JSON (A, B, C, D, E, F)
+
 const INDICADORES = ['A', 'B', 'C', 'D', 'E', 'F']; 
 const CALIFICACION_MAXIMA = 100;
 
-// Propiedades que realmente necesita este componente (las claves de la tabla)
+
 interface CalificacionProps {
     idActividad: any; 
     idAlumno: any;     
@@ -24,7 +24,7 @@ export default function CargarCalificacion({
     onSaveSuccess
 }: CalificacionProps) {
     
-    // Estado para la calificación específica y los indicadores
+    
     const [calificacionEspecifica, setCalificacionEspecifica] = useState<number | null>(null);
     const [indicadores, setIndicadores] = useState<Record<string, number | null>>({});
     const [fechaCaptura, setFechaCaptura] = useState<Date | null>(new Date());
@@ -32,9 +32,9 @@ export default function CargarCalificacion({
     
     const isReady = idActividad && idAlumno;
 
-    // Función para actualizar un indicador específico
+    
     const handleIndicatorChange = (key: string, value: number | null) => {
-        // Aseguramos que la calificación no exceda el máximo
+        
         if (value !== null && value > CALIFICACION_MAXIMA) {
              value = CALIFICACION_MAXIMA;
         }
@@ -52,13 +52,13 @@ export default function CargarCalificacion({
     }
 
     const handleGuardar = async () => { 
-        // Validación: Al menos la calificación específica y la fecha deben estar
+        
         if (calificacionEspecifica === null || calificacionEspecifica < 0 || !fechaCaptura) {
             alert("Por favor, ingrese la Calificación Específica y la Fecha de Captura.");
             return;
         }
         
-        // Comprobar que idAlumno esté disponible para evitar error en el objeto anidado
+        
         if (idAlumno === null) {
             alert("Error interno: ID de alumno no disponible.");
             return;
@@ -66,13 +66,13 @@ export default function CargarCalificacion({
 
         setSaving(true);
         
-        // --- Estructura de Datos (COINCIDE CON EL JSON REQUERIDO) ---
+        
         const calificacionData = {
-            // Formatear fecha a 'DD-MM-YYYY'
+            
             fechaCaptura: fechaCaptura.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-'),
             calificacionEspecifica: calificacionEspecifica,
             
-            // Indicadores (usamos 0 si es nulo)
+            
             indicadorA: indicadores['A'] || 0,
             indicadorB: indicadores['B'] || 0,
             indicadorC: indicadores['C'] || 0,
@@ -80,7 +80,7 @@ export default function CargarCalificacion({
             indicadorE: indicadores['E'] || 0,
             indicadorF: indicadores['F'] || 0,
             
-            // Objeto Alumno
+            
             alumno: {
                 idAlumno: idAlumno.idAlumno
             }
@@ -89,21 +89,21 @@ export default function CargarCalificacion({
         try {
             const response = await CalificacionService.create(calificacionData);
 
-            // Éxito
+            
             console.log("Respuesta del Backend:", response);
             
-            // Limpiar formulario y reiniciar el Stepper
+            
             setCalificacionEspecifica(null);
             setIndicadores({});
             onSaveSuccess(); 
 
         } catch (error) {
-            // Manejo de Errores (de red, 4xx, 5xx, etc.)
+            
             console.error("Error al guardar la calificación:", error);
             const errorMessage = (error as any).response?.data?.message || (error as Error).message || 'Error desconocido del servidor.';
             
         } finally {
-            // Se ejecuta siempre, asegurando que el botón se desbloquee
+            
             setSaving(false);
         }
     };
@@ -144,7 +144,7 @@ export default function CargarCalificacion({
                             id="fechaCaptura" 
                             value={fechaCaptura} 
                             onChange={(e) => setFechaCaptura(e.value as Date)} 
-                            dateFormat="dd-mm-yy" // Coincide con el formato del JSON
+                            dateFormat="dd-mm-yy" 
                             showIcon 
                             className="mt-2"
                         />

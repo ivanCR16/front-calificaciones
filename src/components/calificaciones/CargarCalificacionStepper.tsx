@@ -1,4 +1,3 @@
-// src/components/CargarCalificacionStepper.tsx
 import React, { useState, useRef, useEffect } from 'react';
 import { Stepper } from 'primereact/stepper';
 import { StepperPanel } from 'primereact/stepperpanel';
@@ -11,27 +10,18 @@ import SeleccionarActividad from './Pasos/SeleccionarActividad';
 import SeleccionarAlumno from './Pasos/SeleccionarAlumno';
 import CargarCalificacion from './Pasos/CargarCalificacion';
 
-// Componentes de tabla a crear (simulados)
-/* import SeleccionarAsignatura from './SeleccionarAsignatura';
-import SeleccionarGrupo from './SeleccionarGrupo';
-import SeleccionarTema from './SeleccionarTema';
-import SeleccionarActividad from './SeleccionarActividad';
-import CargarCalificacionFinal from './CargarCalificacionFinal'; // Paso final */
-
-// --- Interfaz para el estado de la selección ---
 interface SeleccionState {
     idAsignatura: number | null;
     idGrupo: number | null;
     idTema: number | null;
     idActividad: number | null;
-    idAlumno: number | null; // El alumno se seleccionará en el último paso
+    idAlumno: number | null;
 }
 
 export default function CargarCalificacionStepper() {
     const stepperRef = useRef<any>(null);
     const toast = useRef<any>(null);
     
-    // Estado para guardar la selección jerárquica
     const [seleccion, setSeleccion] = useState<SeleccionState>({
         idAsignatura: null,
         idGrupo: null,
@@ -40,19 +30,16 @@ export default function CargarCalificacionStepper() {
         idAlumno: null,
     });
     
-    // Inicializamos en null para indicar que la carga del ID está pendiente
     const [idDocente, setIdDocente] = useState<any>(null); 
 
-    // Utilizamos useEffect para cargar el ID del docente directamente del localStorage
     useEffect(() => {
-        // 1. Obtener la cadena de texto (que contiene el ID)
         const idUsuarioString = localStorage.getItem('access_token');
         
         if (idUsuarioString) {
-            // 2. Convertir la cadena a número entero
+            
             const id = parseInt(idUsuarioString, 10); 
             
-            // 3. Validar que la conversión haya sido exitosa (no sea NaN)
+            
             if (!isNaN(id)) {
                 setIdDocente(id);
             } else {
@@ -60,18 +47,18 @@ export default function CargarCalificacionStepper() {
             }
         } else {
             console.warn("No se encontró 'access_token' en localStorage.");
-            // Opcional: Redirigir al login si no hay token/ID
+            
         }
-    }, []); // Array vacío para ejecutar solo una vez al montar
+    }, []); 
 
-    // Función para manejar la selección en un paso
+    
     const handleSeleccion = (key: keyof SeleccionState, id: number | null) => {
         setSeleccion(prev => ({ ...prev, [key]: id }));
-        // Lógica para avanzar automáticamente al siguiente paso (si es necesario)
-        //stepperRef.current.nextCallback();
+        
+        
     };
 
-    // Función de avance con validación simple
+    
     const handleNext = (currentKey: keyof SeleccionState) => {
         if (seleccion[currentKey]) {
             stepperRef.current.nextCallback();
@@ -86,7 +73,7 @@ export default function CargarCalificacionStepper() {
     };
 
     const handleResetForm = () => {
-        // 1. Limpia todos los estados de selección
+        
         setSeleccion({
             idAsignatura: null,
             idGrupo: null,
@@ -94,9 +81,9 @@ export default function CargarCalificacionStepper() {
             idActividad: null,
             idAlumno: null,
         });
-        // 2. Mueve el stepper de vuelta al primer paso
+        
         stepperRef.current.setActiveStep(0);
-        // 3. Muestra un mensaje de éxito
+        
         toast.current.show({ 
             severity: 'success', 
             summary: 'Calificación guardada correctamente.', 
@@ -109,7 +96,7 @@ export default function CargarCalificacionStepper() {
             <Toast ref={toast} />
             <Stepper ref={stepperRef} style={{ flexBasis: '70rem' }} linear>
                 
-                {/* --- Paso 1: Asignatura --- */}
+                
                 <StepperPanel header="Asignatura">
                     <SeleccionarAsignatura 
                         idDocente={idDocente}
@@ -128,7 +115,7 @@ export default function CargarCalificacionStepper() {
                     </div>
                 </StepperPanel>
                 
-                {/* --- Paso 2: Grupo --- */}
+                
                 <StepperPanel header="Grupo">
                     <SeleccionarGrupo 
                         idAsignatura={seleccion.idAsignatura}
@@ -149,7 +136,7 @@ export default function CargarCalificacionStepper() {
                     </div>
                 </StepperPanel>
                 
-                {/* --- Paso 3: Tema --- */}
+                
                 <StepperPanel header="Tema">
                     <SeleccionarTema 
                         idAsignatura={seleccion.idAsignatura}
@@ -170,7 +157,7 @@ export default function CargarCalificacionStepper() {
                     </div>
                 </StepperPanel>
                 
-                {/* --- Paso 4: Actividad --- */}
+                
                 <StepperPanel header="Actividad">
                     <SeleccionarActividad 
                         idTema={seleccion.idTema}
@@ -191,11 +178,11 @@ export default function CargarCalificacionStepper() {
                     </div>
                 </StepperPanel>
 
-                {/* --- Paso 5: Alumno (NUEVO PASO) --- */}
+                
                 <StepperPanel header="Alumno">
-                    <SeleccionarAlumno // <-- COMPONENTE INTEGRADO
-                        idGrupo={seleccion.idGrupo} // <-- Pasamos el ID del grupo (Paso 2)
-                        onSelect={(id) => handleSeleccion('idAlumno', id)} // <-- Actualiza el ID del Alumno
+                    <SeleccionarAlumno 
+                        idGrupo={seleccion.idGrupo} 
+                        onSelect={(id) => handleSeleccion('idAlumno', id)} 
                     />
                     <div className="flex pt-4 justify-content-between">
                         <Button label="Atrás" severity="secondary" icon="pi pi-arrow-left" onClick={() => {
@@ -207,20 +194,20 @@ export default function CargarCalificacionStepper() {
                             icon="pi pi-arrow-right" 
                             iconPos="right" 
                             onClick={() => handleNext('idAlumno')} 
-                            disabled={!seleccion.idAlumno} // <-- Se habilita cuando se selecciona el alumno
+                            disabled={!seleccion.idAlumno} 
                         />
                     </div>
                 </StepperPanel>
                 
-                {/* --- Paso 6: Cargar Calificación (FINAL) --- */}
+                
                 <StepperPanel header="6. Cargar Calificación">
-                    <CargarCalificacion // <-- COMPONENTE FINAL INTEGRADO
+                    <CargarCalificacion 
                         idActividad={seleccion.idActividad}
                         idAlumno={seleccion.idAlumno}
-                        onSaveSuccess={handleResetForm} // <-- Pasamos el handler de éxito
+                        onSaveSuccess={handleResetForm} 
                     />
                     <div className="flex pt-4 justify-content-start">
-                        {/* Solo el botón de 'Atrás' es necesario, ya que el 'Guardar' está en el componente hijo */}
+                        
                         <Button label="Atrás" severity="secondary" icon="pi pi-arrow-left" onClick={() => stepperRef.current.prevCallback()} />
                     </div>
                 </StepperPanel>
